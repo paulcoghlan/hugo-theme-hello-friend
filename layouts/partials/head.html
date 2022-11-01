@@ -15,9 +15,15 @@
 {{- partial "prepended_head.html" . }}
 
 <!-- Theme CSS -->
+
 <link rel="stylesheet" href="{{ "assets/style.css" | absURL }}" />
 <!-- Custom CSS to override theme properties (/static/style.css) -->
 <link rel="stylesheet" href="{{ "style.css" | absURL }}" />
+
+{{ $sass := resources.Get "sass/gallery.scss" }}
+{{ $style := $sass | resources.ToCSS }}
+<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
+
 
 <!-- Icons -->
 <link
@@ -45,6 +51,20 @@
 {{ range .AlternativeOutputFormats -}}
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
 {{ end -}}
+
+<!-- Gallery -->
+<link rel="stylesheet" href="{{ "assets/justifiedGallery.min.css" | absURL }}" />
+<link rel="stylesheet" href="{{ "assets/lightgallery-bundle.min.css" | absURL }}" />
+
+<script>
+  var galleryProps =  {
+        captions: false,
+        lastRow: "justify",
+        rowHeight: 200,
+        maxRowHeight: 600,
+        margins: 5
+      }; 
+</script>
 
 <!-- head custom -->
 {{- partial "extended_head.html" . }}

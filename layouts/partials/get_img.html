@@ -1,0 +1,5 @@
+{{- $rotate := partial "get_rotation.html" . -}}
+{{- $tinyw := printf "x375 %s smart Lanczos q85 " $rotate -}}
+{{- $tiny := (.Resize $tinyw) -}}
+{{- $img := dict "src" $tiny.RelPermalink "w" $tiny.Width "h" .Height -}}
+{{ return $img }}

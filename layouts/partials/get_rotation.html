@@ -1,0 +1,11 @@
+{{ $rotate := "r0" }}
+{{- with .Exif -}}
+  {{- with .Tags -}}
+    {{- with .Orientation -}}
+      {{- if eq . 8 -}}
+        {{ $rotate = "r90" }}
+      {{- end -}}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $rotate }}

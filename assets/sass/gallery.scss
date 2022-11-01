@@ -1,0 +1,52 @@
+.lg-container {
+    .lg-components, .lg-counter {
+        font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
+    }
+}
+.content {
+
+    .photo-container {
+        display: flex;
+        flex-wrap: wrap;
+    
+        @media(max-width:899px) {
+            margin: 0;
+        }
+    
+        img {
+            border-radius: 4px;
+        }
+    
+        .photo-item {
+            padding: 2px;
+            width: 200px;
+            // width: 50%;
+    
+            // @media(max-width:683px) {
+            //    width: 100%;
+            //}
+            .jg-caption {
+                font-size: 1.625rem;
+                font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
+                left: 50%;
+                top: 50%;
+                bottom: auto;
+                right: auto;
+                position: absolute;
+                transform: translate(-50%,-50%);
+                background-color: #292a2d;
+                display: block;
+            }
+        }
+    }
+}
+
+
+.lg-fullscreen.lg-icon {
+    font-size: 1.5rem;
+    vertical-align: bottom;
+}
+
+.toggle-fullscreen-slideshow {
+    cursor: pointer;
+}

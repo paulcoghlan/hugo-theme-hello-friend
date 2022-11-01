@@ -1,0 +1,12 @@
+{{ define "main" }}    
+  <div class="post list">
+    <h1 class="post-title">{{ .Title | markdownify }}</h1>
+
+    <div class="post-content">
+    {{ .Content }}
+    </div>
+    <div class="post list">
+      {{ partial "gallery-list.html" (dict "pages" $.Site.RegularPages "parentUrl" .RelPermalink)  }}
+    </div>
+  </div>
+{{ end }}

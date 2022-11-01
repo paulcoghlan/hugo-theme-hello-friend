@@ -1,0 +1,4 @@
+<div class="post list">
+{{ $pages := .Site.RegularPages }}
+{{ partial "gallery-list.html" (dict "pages" $pages "parentUrl" "/gallery/")  }}
+</div>

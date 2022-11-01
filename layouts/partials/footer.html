@@ -10,15 +10,74 @@
           <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
         >
         <span
-          >Theme created by
+          >Fork of theme created by
           <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span
         >
       </div>
     {{ end }}
+
+    {{/* printf "type: %s" .Type */}}
+    {{/* printf "kind: %s" .Kind */}}
+
   </div>
 </footer>
 
 <script src="{{ "assets/main.js" | absURL }}"></script>
 <script src="{{ "assets/prism.js" | absURL }}"></script>
+
+<script src="{{ "assets/jquery-3.6.1.min.js" | absURL }}"></script>
+<script src="{{ "assets/lightgallery.min.js" | absURL }}"></script>
+<script src="{{ "assets/jquery.justifiedGallery.js" | absURL }}"></script>
+
+{{- if and (eq .Type "gallery") (eq .Kind "page") -}}
+  <script src="{{ "assets/lg-autoplay.min.js" | absURL }}"></script>
+  <script src="{{ "assets/lg-thumbnail.min.js" | absURL }}"></script>
+
+  {{ if eq hugo.Environment "development" }}
+    <!-- Allow drag and drop of images in dev mode -->
+    <script src="{{ "assets/draggable.js" | absURL }}"></script>
+  {{ end }}
+
+  <script>
+    galleryProps.captions = false;
+    $('#lightgallery').justifiedGallery(
+      galleryProps
+    ).on("jg.complete", function () {
+      window.lightGallery($('#lightgallery')[0], {
+        plugins: [lgAutoplay,lgThumbnail]
+      });
+      $('.toggle-fullscreen-slideshow').on("click", function () {
+        // Create new window.lightGallery() on exit from fullscreen
+        var fullscreen = lightGallery($('#lightgallery')[0], {
+          plugins: [lgAutoplay],
+          slideShowAutoplay: true,
+          autoplayControls: false,
+          progressBar: false,
+          controls: false,
+          download: false,
+          counter: false,
+          showCloseIcon: false
+        });
+        // Need to re-created lightGallery after fullscreen close
+        $('#lightgallery').on("lgAfterClose", function() {
+          window.lightGallery($('#  ')[0], {
+            plugins: [lgAutoplay,lgThumbnail]
+          });
+        });
+        fullscreen.openGallery(); 
+      });
+    });
+</script>
+{{- end -}}
+
+<!-- Only show captions in non-gallery pages -->
+{{- if or (ne .Type "gallery") (ne .Kind "page") -}}
+<script>
+  galleryProps.captions = true;
+  $('.photo-collection').justifiedGallery(
+    galleryProps
+  );
+</script>
+{{- end -}}
 
 {{- partial "extended_footer.html" . }}

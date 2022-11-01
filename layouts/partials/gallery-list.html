@@ -1,0 +1,54 @@
+<div class="photo-collection photo-container">
+    {{ $depth := len (split .parentUrl "/") }}
+    {{ $parentUrl := .parentUrl }}
+
+    {{/* Weak privacy mechanism: if we know collection url, see any child galleries */}}
+    {{ $hideUnbrowseable := .hideUnbrowseable | default true }}
+
+    {{ range $page := .pages }}
+        <!-- {{ printf "$page: %#v"  $page.RelPermalink }}
+        {{ printf "$parentUrl: %#v" $parentUrl }} -->
+
+        {{ $isVisible := or (ne $page.Params.browseable false) (ne $hideUnbrowseable true) }}
+        <!-- {{ printf "$isVisible: %b, $page.Params.hidden: %b, $hideUnbrowseable: %b" $isVisible $page.Params.hidden $hideUnbrowseable }} -->
+        
+        {{ $cover := $page.Params.Cover }}
+        <!-- {{ printf "$cover: %#v" $cover }} -->
+
+        {{- with $cover -}}
+            {{/* Look in site ./assets first, then theme assets for cover image  */}}
+            {{ $src := $page.Resources.GetMatch $cover | default (resources.Get $cover) }}
+
+            {{- with $src -}}
+                {{ $img := partial "get_img.html" $src }}
+                <!-- {{ printf "$img: %#v\n" $img }} -->
+                
+                {{/* Filter by parentUrl  */}}
+                {{ if gt (len ($parentUrl)) 0 }}
+                    {{ $substr := substr $page.RelPermalink 0 (len $parentUrl) }}
+                    {{ $isUrlMatch := eq $substr $parentUrl }}
+                    {{ $isNested := eq (add $depth 1) (len (split $page.RelPermalink "/")) }}
+
+                    <!-- {{ printf "$isUrlMatch %b, $isNested: %b, %isVisible\n" $isUrlMatch  $isNested $isVisible }} -->
+
+                    {{ if and ($isUrlMatch) ($isNested) ($isVisible) }}
+                        <a class="photo-item" href="{{ $page.Permalink }}">
+                            <img class="img-responsive" src="{{ $img.src }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
+                        </a>
+                    {{ end }}  
+                {{ end }}
+
+                {{/* Unfiltered list  */}}
+                {{ if eq (len ($parentUrl)) 0 }}
+                    {{ if ($isVisible) }}
+                        <a class="photo-item" href="{{ $page.Permalink }}">
+                            <img class="img-responsive" src="{{ $img.src }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
+                        </a>
+                    {{ end }}  
+                {{ end }}
+
+            {{- end -}}
+        {{- end -}}
+
+    {{ end }}
+</div>
