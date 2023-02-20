@@ -6,7 +6,7 @@
         {{ .Content }}
         </div>
         <div class="post list">
-            {{ partial "gallery-list.html" (dict "pages" $.Site.RegularPages "parentUrl" .RelPermalink "hideUnbrowseable" false)  }}
+            {{ partial "gallery-list.html" (dict "pages" $.Site.RegularPages "sortBy" "asc" "parentUrl" .RelPermalink "hideUnbrowseable" false)  }}
         </div>
     </div>
 {{ end }}

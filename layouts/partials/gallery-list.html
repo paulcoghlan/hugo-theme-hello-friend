@@ -4,8 +4,8 @@
 
     {{/* Weak privacy mechanism: if we know collection url, see any child galleries */}}
     {{ $hideUnbrowseable := .hideUnbrowseable | default true }}
-
-    {{ range $page := .pages }}
+    {{ $sortBy := .sortBy | default "desc" }}
+    {{ range $page := sort .pages ".Date" $sortBy }}
         <!-- {{ printf "$page: %#v"  $page.RelPermalink }}
         {{ printf "$parentUrl: %#v" $parentUrl }} -->
 
