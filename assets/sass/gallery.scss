@@ -5,6 +5,10 @@
 }
 .content {
 
+    .justified-gallery > a > .jg-caption, .justified-gallery > div > .jg-caption, .justified-gallery > figure > .jg-caption {
+        background-color: unset;    
+    }
+    
     .photo-container {
         display: flex;
         flex-wrap: wrap;
@@ -26,20 +30,21 @@
             //    width: 100%;
             //}
             .jg-caption {
-                font-size: 1.625rem;
+                font-size: 1rem;
                 font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
-                left: 50%;
-                top: 50%;
-                bottom: auto;
+                left: 0;
+                bottom: 0;
+                top: auto;
                 right: auto;
                 position: absolute;
-                transform: translate(-50%,-50%);
-                background-color: #292a2d;
+                padding: 0 8px 8px;
+                // background-color: #292a2d;
                 display: block;
             }
         }
     }
 }
+
 
 
 .lg-fullscreen.lg-icon {
