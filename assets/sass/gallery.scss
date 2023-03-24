@@ -31,7 +31,11 @@
             //}
             .jg-caption {
                 font-size: 1rem;
+                font-weight: 700;
                 line-height: 1.2rem;
+                text-shadow: 0 0 3px #000;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
                 left: 0;
                 bottom: 0;
@@ -41,6 +45,7 @@
                 padding: 0 10px 8px;
                 // background-color: #292a2d;
                 display: block;
+                overflow: hidden;
             }
         }
     }
