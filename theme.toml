@@ -1,4 +1,4 @@
-description = "A simple theme for Hugo. That's it."
+description = "A simple theme for Hugo."
 features = ["blog", "shortcode", "syntax Highlighting"]
 homepage = "https://github.com/panr/hugo-theme-hello-friend/"
 license = "MIT"
