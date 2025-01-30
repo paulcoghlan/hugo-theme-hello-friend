@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="{{ "style.css" | absURL }}" />
 
 {{ $sass := resources.Get "sass/gallery.scss" }}
-{{ $style := $sass | resources.ToCSS }}
+{{ $style := $sass | css.Sass }}
 <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
 
 
