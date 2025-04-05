@@ -1,25 +1,25 @@
 {{- $exif := slice -}}
-    {{- with .Exif -}}
-        {{- with .Tags -}}
-            {{- with .Title -}}{{- $title = . -}}{{- end -}}
-            {{- with .LensSpec -}}{{- $exif = $exif | append (printf "Lens: %s" .) -}}{{- end -}}
-            {{- with .FocalLength -}}
-                {{- if eq (printf "%T" .) "float64" -}}
-                    {{- $exif = $exif | append (printf "Focal length: %.1fmm" .) -}}
-                {{- else -}}
-                    {{- $exif = $exif | append (printf "Focal length: %s" .) -}}
-                {{- end -}}
+{{- $jsonPath := printf "%s.json" (strings.TrimSuffix ".jpg" .Name) -}}
+{{- with .Parent.GetMatch $jsonPath -}}
+    {{- $jsonData := . | transform.Unmarshal -}}
+    {{- with index $jsonData 0 -}}
+        {{- with .LensSpec -}}{{- $exif = $exif | append (printf "Lens: %s" .) -}}{{- end -}}
+        {{- with .FocalLength -}}
+            {{- if eq (printf "%T" .) "float64" -}}
+                {{- $exif = $exif | append (printf "Focal length: %.1fmm" .) -}}
+            {{- else -}}
+                {{- $exif = $exif | append (printf "Focal length: %s" .) -}}
             {{- end -}}
-            {{- with .FNumber -}}{{- $exif = $exif | append (printf "Aperture: ƒ/%.1f" .) -}}{{- end -}}
-            {{- with .ExposureTime -}}
-                {{- if eq (printf "%T" .) "float64" -}}
-                    {{- $exif = $exif | append (printf "Exposure time: %.1f s" .) -}}
-                {{- else -}}
-                    {{- $exif = $exif | append (printf "Exposure time: %s s" .) -}}
-                {{- end -}}
-            {{- end -}}
-        
-            {{- with .ISO -}}{{- $exif = $exif | append (printf "ISO: %.0f" .) -}}{{- end -}}
         {{- end -}}
+        {{- with .FNumber -}}{{- $exif = $exif | append (printf "Aperture: ƒ/%.1f" .) -}}{{- end -}}
+        {{- with .ExposureTime -}}
+            {{- if eq (printf "%T" .) "float64" -}}
+                {{- $exif = $exif | append (printf "Exposure time: %.1f s" .) -}}
+            {{- else -}}
+                {{- $exif = $exif | append (printf "Exposure time: %s s" .) -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with .ISO -}}{{- $exif = $exif | append (printf "ISO: %.0f" .) -}}{{- end -}}
     {{- end -}}
+{{- end -}}
 {{ return $exif }}
