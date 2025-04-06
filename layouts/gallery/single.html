@@ -56,7 +56,7 @@
           {{- $title := (replace .Title "" "") -}}          
 
           {{ $img := partial "get_img.html" $src }}
-          {{ $exif := partial "exif_info.html" $src }}
+          {{ $exif := partial "exif_info.html" (dict "Resource" $src "Page" $context) }}
               
           <a class="photo-item" href="{{ .Permalink }}" data-src="{{ .Permalink }}" data-sub-html="<h4>{{ $title }}</h4><p>{{ delimit $exif " | " }}</p>">
             <img loading="lazy" class="img-responsive"

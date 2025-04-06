@@ -1,5 +1,5 @@
 {{- $exif := slice -}}
-{{- $jsonPath := printf "%s.json" (strings.TrimSuffix ".jpg" .Name) -}}
+{{- $jsonPath := printf "%s.json" (strings.TrimSuffix ".jpg" .Resource.Name) -}}
 {{- with .Page.Resources.GetMatch $jsonPath -}}
     {{- $jsonData := . | transform.Unmarshal -}}
     {{- with index $jsonData 0 -}}
