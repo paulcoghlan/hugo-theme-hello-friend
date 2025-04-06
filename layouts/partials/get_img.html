@@ -1,4 +1,4 @@
-{{- $rotate := partial "get_rotation.html" . -}}
+{{- $rotate := partialCached "get_rotation.html" . .RelPermalink -}}
 {{- $cacheKey := printf "img-%s-%s" .RelPermalink $rotate -}}
 {{- $cachedImg := partialCached "get_img_inner.html" (dict "Image" . "Rotate" $rotate) $cacheKey -}}
 {{ return $cachedImg }}
