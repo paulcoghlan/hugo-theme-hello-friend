@@ -1,6 +1,6 @@
 {{- $exif := slice -}}
 {{- $jsonPath := printf "%s.json" (strings.TrimSuffix ".jpg" .Name) -}}
-{{- with .Parent.GetMatch $jsonPath -}}
+{{- with .Page.Resources.GetMatch $jsonPath -}}
     {{- $jsonData := . | transform.Unmarshal -}}
     {{- with index $jsonData 0 -}}
         {{- with .LensSpec -}}{{- $exif = $exif | append (printf "Lens: %s" .) -}}{{- end -}}
