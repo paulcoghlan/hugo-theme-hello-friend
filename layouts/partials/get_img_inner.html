@@ -1,0 +1,4 @@
+{{- $tinyw := printf "x375 %s smart Lanczos q85 " .Rotate -}}
+{{- $tiny := (.Image.Resize $tinyw) -}}
+{{- $img := dict "src" $tiny.RelPermalink "w" $tiny.Width "h" .Image.Height -}}
+{{ return $img }} 
