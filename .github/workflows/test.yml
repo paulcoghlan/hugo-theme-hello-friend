@@ -35,3 +35,34 @@ jobs:
             exit 1
           fi
           echo "Build completed successfully!"
+
+  hugo-test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build site with Hugo
+        run: hugo -v
+        working-directory: exampleSite
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "public" ]; then
+            echo "Hugo build did not create public directory!"
+            exit 1
+          fi
+          if [ ! -f "public/index.html" ]; then
+            echo "Hugo did not generate index.html!"
+            exit 1
+          fi
+          echo "Hugo build successful - public directory created with content!"
+        working-directory: exampleSite
