@@ -2,3 +2,5 @@ node_modules
 public
 *.lock
 .DS_Store
+.hugo_build.lock
+test-results/.last-run.json
