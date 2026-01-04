@@ -198,4 +198,4 @@ The `build.sh` script:
 
 ## Development Practises
 
-- Run `make test` or Playwright to verify changes.
+- Run `make serve`, `make test` or Playwright to verify changes.
