@@ -12,6 +12,8 @@ paginate = 5
   showMenuItems = 3
   # Enable to show reading time in minutes for posts
   showReadingTime = false
+  # Use relative URLs for cover images (required for page bundles)
+  UseRelativeCover = true
 
 [languages]
   [languages.en]
