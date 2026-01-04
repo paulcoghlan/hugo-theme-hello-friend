@@ -1,4 +1,4 @@
-.PHONY: build serve clean test test-build
+.PHONY: build serve clean test test-build playwright-install test-e2e
 
 # Build the Hugo site using Docker
 build:
@@ -23,8 +23,16 @@ test-build: build
 serve:
 	docker-compose up hugo-serve
 
-# Run tests (validates build outputs)
-test: test-build
+# Install Playwright browsers
+playwright-install:
+	npx playwright install --with-deps
+
+# Run Playwright E2E tests
+test-e2e:
+	npx playwright test
+
+# Run all tests (build validation + E2E tests)
+test: test-build playwright-install test-e2e
 
 # Clean build artifacts and Docker images
 clean:
@@ -38,11 +46,13 @@ docker-build:
 # Help
 help:
 	@echo "Available targets:"
-	@echo "  build        - Build the Hugo site (runs webpack + hugo build)"
-	@echo "  serve        - Serve the site at http://localhost:1313"
-	@echo "  test         - Run tests (validates build outputs)"
-	@echo "  test-build   - Fast build validation (checks HTML files exist)"
-	@echo "  clean        - Remove build artifacts and Docker images"
-	@echo "  docker-build - Build the Docker image"
-	@echo "  help         - Show this help message"
+	@echo "  build              - Build the Hugo site (runs webpack + hugo build)"
+	@echo "  serve              - Serve the site at http://localhost:1313"
+	@echo "  test               - Run all tests (build validation + E2E tests)"
+	@echo "  test-build         - Fast build validation (checks HTML files exist)"
+	@echo "  test-e2e           - Run Playwright E2E tests"
+	@echo "  playwright-install - Install Playwright browsers"
+	@echo "  clean              - Remove build artifacts and Docker images"
+	@echo "  docker-build       - Build the Docker image"
+	@echo "  help               - Show this help message"
 
