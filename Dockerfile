@@ -3,7 +3,7 @@ FROM debian:bullseye-slim as builder
 
 # Set environment variables
 ENV HUGO_VERSION 0.142.0
-ENV NODE_MAJOR 18
+ENV NODE_MAJOR 20
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \

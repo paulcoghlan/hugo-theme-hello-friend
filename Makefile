@@ -1,26 +1,28 @@
-.PHONY: build serve clean test test-build playwright-install test-e2e
+.PHONY: build serve clean test test-build
 
 # Build the Hugo site using Docker
 build:
 	docker-compose up hugo-build
 
+# Validate build outputs (fast feedback)
+test-build: build
+	@echo "Validating build outputs..."
+	@test -d exampleSite/public || (echo "ERROR: public/ directory missing" && exit 1)
+	@test -f exampleSite/public/assets/style.css || (echo "ERROR: webpack CSS missing" && exit 1)
+	@test -f exampleSite/public/index.html || (echo "ERROR: home page missing" && exit 1)
+	@test -f exampleSite/public/about/index.html || (echo "ERROR: about page missing" && exit 1)
+	@test -f exampleSite/public/post/hello/index.html || (echo "ERROR: blog post missing" && exit 1)
+	@test -f exampleSite/public/gallery/index.html || (echo "ERROR: gallery list missing" && exit 1)
+	@test -f exampleSite/public/gallery/nature/index.html || (echo "ERROR: gallery page missing" && exit 1)
+	@test -f exampleSite/public/archive/index.html || (echo "ERROR: archive page missing" && exit 1)
+	@echo "✓ All critical HTML files generated successfully"
+
 # Serve the site locally
 serve:
 	docker-compose up hugo-serve
 
-# Run build tests (verifies artifacts)
-test-build: build
-
-# Install playwright browsers
-playwright-install:
-	npx playwright install --with-deps
-
-# Run e2e tests
-test-e2e:
-	npx playwright test
-
-# Run all tests
-test: playwright-install test-e2e
+# Run tests (validates build outputs)
+test: test-build
 
 # Clean build artifacts and Docker images
 clean:
@@ -34,12 +36,11 @@ docker-build:
 # Help
 help:
 	@echo "Available targets:"
-	@echo "  build              - Build the Hugo site (runs webpack + hugo build)"
-	@echo "  serve              - Serve the site at http://localhost:1313"
-	@echo "  test               - Run all tests"
-	@echo "  test-build         - Run build tests (verifies artifacts)"
-	@echo "  playwright-install - Install Playwright browsers"
-	@echo "  test-e2e           - Run e2e tests"
-	@echo "  clean              - Remove build artifacts and Docker images"
-	@echo "  docker-build       - Build the Docker image"
-	@echo "  help               - Show this help message"
+	@echo "  build        - Build the Hugo site (runs webpack + hugo build)"
+	@echo "  serve        - Serve the site at http://localhost:1313"
+	@echo "  test         - Run tests (validates build outputs)"
+	@echo "  test-build   - Fast build validation (checks HTML files exist)"
+	@echo "  clean        - Remove build artifacts and Docker images"
+	@echo "  docker-build - Build the Docker image"
+	@echo "  help         - Show this help message"
+

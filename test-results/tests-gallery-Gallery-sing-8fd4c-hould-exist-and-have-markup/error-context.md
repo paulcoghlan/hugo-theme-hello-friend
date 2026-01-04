@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "hello friend" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e7]
+        - generic [ref=e9]: hello friend
+      - generic [ref=e11]:
+        - navigation [ref=e12]:
+          - list [ref=e13]:
+            - listitem [ref=e14]:
+              - link "About" [ref=e15] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e16]:
+              - link "Gallery" [ref=e17] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=e18]:
+              - link "Showcase" [ref=e19] [cursor=pointer]:
+                - /url: /showcase
+        - img [ref=e21] [cursor=pointer]
+  - generic [ref=e24]:
+    - heading "404 Page not found" [level=1] [ref=e25]:
+      - link "404 Page not found" [ref=e26] [cursor=pointer]:
+        - /url: http://localhost:1313/404.html
+    - generic [ref=e27]:
+      - paragraph [ref=e28]: Hmm… Sorry, this page seems to be missing.
+      - paragraph [ref=e29]: Maybe these tags will help you find what you’re looking for. 😄
+      - heading "Tags" [level=2] [ref=e30]
+      - list [ref=e32]:
+        - listitem [ref=e33]:
+          - link "#Landscape" [ref=e34] [cursor=pointer]:
+            - /url: http://localhost:1313/tags/landscape/
+          - text: "1"
+        - listitem [ref=e35]:
+          - link "#Nature" [ref=e36] [cursor=pointer]:
+            - /url: http://localhost:1313/tags/nature/
+          - text: "1"
+  - contentinfo [ref=e37]:
+    - generic [ref=e38]:
+      - link "hello friend" [ref=e39] [cursor=pointer]:
+        - /url: /
+        - img [ref=e41]
+        - generic [ref=e43]: hello friend
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - text: © 2026 Powered by
+          - link "Hugo" [ref=e47] [cursor=pointer]:
+            - /url: https://gohugo.io
+        - generic [ref=e48]:
+          - text: Fork of theme created by
+          - link "panr" [ref=e49] [cursor=pointer]:
+            - /url: https://twitter.com/panr
+```

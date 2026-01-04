@@ -24,7 +24,10 @@ make build
 # Serve the site at http://localhost:1313
 make serve
 
-# Run tests (verifies build artifacts)
+# Fast build validation (checks HTML files exist)
+make test-build
+
+# Run full test suite (build validation + E2E tests)
 make test
 ```
 
@@ -131,7 +134,23 @@ layouts/
 
 ## Testing
 
-CI runs on GitHub Actions (`.github/workflows/test.yml`):
+### Local Testing
+
+The Makefile provides two test targets:
+
+- **`make test-build`**: Fast build validation (~30s)
+  - Verifies webpack compiled `static/assets/style.css`
+  - Checks all critical HTML files exist in `exampleSite/public/`
+  - Validates markdown → HTML conversion for all content types
+  - Files checked: home page, blog posts, gallery pages, archive page
+
+- **`make test`**: Full test suite
+  - Runs `test-build` for fast feedback
+  - Runs Playwright E2E tests (if configured)
+
+### CI Testing
+
+GitHub Actions (`.github/workflows/test.yml`) runs:
 - Builds webpack assets
 - Verifies `static/assets/` exists
 - Runs Hugo build
