@@ -26,7 +26,7 @@ test: test-build
 
 # Clean build artifacts and Docker images
 clean:
-	rm -rf exampleSite/public exampleSite/resources node_modules
+	rm -rf exampleSite/public exampleSite/resources
 	docker-compose down --rmi local --remove-orphans 2>/dev/null || true
 
 # Build Docker image
