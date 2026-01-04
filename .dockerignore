@@ -1,0 +1,7 @@
+node_modules
+exampleSite/public
+exampleSite/resources
+.git
+.github
+*.log
+.DS_Store
