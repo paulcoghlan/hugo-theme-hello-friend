@@ -13,9 +13,11 @@ test-build: build
 	@test -f exampleSite/public/about/index.html || (echo "ERROR: about page missing" && exit 1)
 	@test -f exampleSite/public/post/hello/index.html || (echo "ERROR: blog post missing" && exit 1)
 	@test -f exampleSite/public/gallery/index.html || (echo "ERROR: gallery list missing" && exit 1)
-	@test -f exampleSite/public/gallery/nature/index.html || (echo "ERROR: gallery page missing" && exit 1)
+	@test -f exampleSite/public/gallery/nature/index.html || (echo "ERROR: gallery/nature missing" && exit 1)
+	@test -f exampleSite/public/gallery/nature/landscapes/index.html || (echo "ERROR: gallery/nature/landscapes missing (1-level nested)" && exit 1)
+	@test -f exampleSite/public/gallery/nature/landscapes/mountains/index.html || (echo "ERROR: gallery/nature/landscapes/mountains missing (2-level nested)" && exit 1)
 	@test -f exampleSite/public/archive/index.html || (echo "ERROR: archive page missing" && exit 1)
-	@echo "✓ All critical HTML files generated successfully"
+	@echo "✓ All critical HTML files generated successfully (including nested galleries)"
 
 # Serve the site locally
 serve:
