@@ -16,5 +16,7 @@ services:
         HUGO_ACTION: serve
     ports:
       - "1313:1313"
+    volumes:
+      - ./exampleSite/content:/site/exampleSite/content
     environment:
       - HUGO_ACTION=serve
