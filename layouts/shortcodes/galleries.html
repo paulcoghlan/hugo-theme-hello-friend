@@ -1,5 +1,5 @@
 {{ $limit := .Get "limit" | default 5 }}
 <div class="post list">
-{{ $pages := where .Site.RegularPages  "Type" "gallery" | first (add (int $limit) 1) }}
+{{ $pages := where .Site.Pages  "Type" "gallery" | first (add (int $limit) 1) }}
 {{ partial "gallery-list.html" (dict "pages" $pages "parentUrl" "")  }}
 </div>

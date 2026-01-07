@@ -1,4 +1,4 @@
 <div class="post list">
-{{ $pages := .Site.RegularPages }}
+{{ $pages := .Site.Pages }}
 {{ partial "gallery-list.html" (dict "pages" $pages "parentUrl" "/gallery/")  }}
 </div>

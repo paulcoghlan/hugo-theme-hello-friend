@@ -16,39 +16,47 @@
 
         {{- with $page.Params.Cover -}}
 
-            {{/* Look in site ./assets first, then theme assets for cover image  */}}
-            {{ $src := $page.Resources.GetMatch $coverWildcard | default (resources.Get $page.Params.Cover) }}
-            {{- with $src -}}
+            {{/* Try to get the resource for image processing (leaf bundles) */}}
+            {{ $src := $page.Resources.Get $page.Params.Cover | default ($page.Resources.GetMatch $coverWildcard) | default (resources.Get $page.Params.Cover) }}
+
+            {{/* Determine the image src - use processed version if available, otherwise construct direct URL */}}
+            {{ $imgSrc := "" }}
+            {{ if $src }}
                 {{ $img := partial "get_img.html" $src }}
-                {{/* printf "$img: %#v\n" $img */}}
-                
-                {{/* Filter by parentUrl  */}}
-                {{ if gt (len ($parentUrl)) 0 }}
-                    {{ $substr := substr $page.RelPermalink 0 (len $parentUrl) }}
-                    {{ $isUrlMatch := eq $substr $parentUrl }}
-
-                    {{ $childDepth := $page.RelPermalink | strings.Count "/" }}
-                    {{ $isNested := eq (add $parentDepth 1) $childDepth }}
- 
-                    {{/* printf "$isUrlMatch %b, $isNested: %b, %isVisible\n" $isUrlMatch  $isNested $isVisible */}}
-
-                    {{ if and ($isUrlMatch) ($isNested) ($isVisible) }}
-                        <a class="photo-item" href="{{ $page.Permalink }}">
-                            <img class="img-responsive" src="{{ $img.src }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
-                        </a>
-                    {{ end }}  
+                {{ $imgSrc = $img.src }}
+            {{ else }}
+                {{/* Fallback for branch bundles: construct relative URL like postcover.html */}}
+                {{ if $page.Site.Params.UseRelativeCover }}
+                    {{ $imgSrc = printf "%s%s" $page.Permalink $page.Params.Cover }}
+                {{ else }}
+                    {{ $imgSrc = $page.Params.Cover | absURL }}
                 {{ end }}
+            {{ end }}
 
-                {{/* Unfiltered list  */}}
-                {{ if eq (len ($parentUrl)) 0 }}
-                    {{ if ($isVisible) }}
-                        <a class="photo-item" href="{{ $page.Permalink }}">
-                            <img class="img-responsive" src="{{ $img.src }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
-                        </a>
-                    {{ end }}  
+            {{/* Filter by parentUrl  */}}
+            {{ if gt (len ($parentUrl)) 0 }}
+                {{ $substr := substr $page.RelPermalink 0 (len $parentUrl) }}
+                {{ $isUrlMatch := eq $substr $parentUrl }}
+
+                {{ $childDepth := $page.RelPermalink | strings.Count "/" }}
+                {{ $isNested := eq (add $parentDepth 1) $childDepth }}
+
+                {{ if and ($isUrlMatch) ($isNested) ($isVisible) }}
+                    <a class="photo-item" href="{{ $page.Permalink }}">
+                        <img class="img-responsive" src="{{ $imgSrc }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
+                    </a>
                 {{ end }}
+            {{ end }}
 
-            {{- end -}}
+            {{/* Unfiltered list  */}}
+            {{ if eq (len ($parentUrl)) 0 }}
+                {{ if ($isVisible) }}
+                    <a class="photo-item" href="{{ $page.Permalink }}">
+                        <img class="img-responsive" src="{{ $imgSrc }}" alt="{{ $page.Params.CoverAlt | plainify | default $page.Title }}"/>
+                    </a>
+                {{ end }}
+            {{ end }}
+
         {{- end -}}
 
     {{ end }}
