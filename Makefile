@@ -1,4 +1,4 @@
-.PHONY: build serve clean clean-cache clean-all test test-build test-cache playwright-install test-e2e exif-json
+.PHONY: build preview clean clean-cache clean-all test test-build test-cache playwright-install test-e2e exif-json
 
 # Build the Hugo site using Docker
 build:
@@ -19,8 +19,8 @@ test-build: build
 	@test -f exampleSite/public/archive/index.html || (echo "ERROR: archive page missing" && exit 1)
 	@echo "✓ All critical HTML files generated successfully (including nested galleries)"
 
-# Serve the site locally
-serve:
+# Preview the site locally
+preview:
 	docker-compose up hugo-serve
 
 # Generate EXIF JSON sidecar files for all images
@@ -66,7 +66,7 @@ docker-build:
 help:
 	@echo "Available targets:"
 	@echo "  build              - Build the Hugo site (runs webpack + hugo build)"
-	@echo "  serve              - Serve the site at http://localhost:1313"
+	@echo "  preview            - Preview the site at http://localhost:1313"
 	@echo "  exif-json          - Generate EXIF JSON sidecar files for all images"
 	@echo "  test               - Run all tests (build validation + E2E tests)"
 	@echo "  test-build         - Fast build validation (checks HTML files exist)"

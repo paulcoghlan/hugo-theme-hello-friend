@@ -6,7 +6,7 @@ module.exports = defineConfig({
     baseURL: 'http://localhost:1313',
   },
   webServer: {
-    command: 'make serve',
+    command: 'make preview',
     port: 1313,
     reuseExistingServer: true,
   },

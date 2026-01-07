@@ -22,7 +22,7 @@ make clean
 make build
 
 # Serve the site at http://localhost:1313
-make serve
+make preview
 
 # Fast build validation (checks HTML files exist)
 make test-build
@@ -46,7 +46,7 @@ yarn dev
 yarn build
 ```
 
-**Important:** After modifying theme files, you must rebuild the site with `make build` or restart `make serve` for changes to take effect, as Docker copies files at build time.
+**Important:** After modifying theme files, you must rebuild the site with `make build` or restart `make preview` for changes to take effect, as Docker copies files at build time.
 
 ## Architecture
 
@@ -217,7 +217,7 @@ The `build.sh` script:
 
 ## Development Practises
 
-- Run `make serve`, `make test` or Playwright to verify changes.
+- Run `make preview`, `make test` or Playwright to verify changes.
 
 ## Build Caching
 

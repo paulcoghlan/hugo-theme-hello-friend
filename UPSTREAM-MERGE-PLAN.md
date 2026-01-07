@@ -99,7 +99,7 @@ This plan focuses on the **recommended high-value commits** that enhance UX with
    - The key change is adding OS preference detection before theme initialization
    - Look for `window.matchMedia('(prefers-color-scheme: dark)')` logic
 3. Test the theme switching:
-   - Run `make build` and `make serve`
+   - Run `make build` and `make preview`
    - Test with system in dark mode - verify theme matches
    - Test with system in light mode - verify theme matches
    - Test manual theme toggle still works
@@ -133,7 +133,7 @@ This plan focuses on the **recommended high-value commits** that enhance UX with
    ```bash
    make clean
    make build
-   make serve
+   make preview
    ```
 
 ### Phase 5: Comprehensive Testing
