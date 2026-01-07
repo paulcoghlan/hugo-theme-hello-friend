@@ -5,8 +5,10 @@ services:
       args:
         HUGO_ACTION: build
     volumes:
-      - ./exampleSite/public:/site/exampleSite/public
-      - ./exampleSite/resources:/site/exampleSite/resources
+      - ${CONTENT_DIR:-./exampleSite}/public:/site/usersite/public
+      - ${CONTENT_DIR:-./exampleSite}/resources:/site/usersite/resources
+      - ${CONTENT_DIR:-./exampleSite}/content:/site/usersite/content
+      - ${CONTENT_DIR:-./exampleSite}/config.toml:/site/usersite/config.toml
     environment:
       - HUGO_ACTION=build
 
@@ -18,8 +20,9 @@ services:
     ports:
       - "1313:1313"
     volumes:
-      - ./exampleSite/content:/site/exampleSite/content
-      - ./exampleSite/resources:/site/exampleSite/resources
+      - ${CONTENT_DIR:-./exampleSite}/content:/site/usersite/content
+      - ${CONTENT_DIR:-./exampleSite}/resources:/site/usersite/resources
+      - ${CONTENT_DIR:-./exampleSite}/config.toml:/site/usersite/config.toml
     environment:
       - HUGO_ACTION=serve
 
@@ -27,12 +30,12 @@ services:
     build:
       context: .
     volumes:
-      - ./exampleSite/content:/site/exampleSite/content
+      - ${CONTENT_DIR:-./exampleSite}/content:/site/usersite/content
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
         echo "Generating EXIF JSON sidecar files..."
-        find /site/exampleSite/content -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) | while read img; do
+        find /site/usersite/content -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) | while read img; do
           json="$${img%.*}.json"
           if [ ! -f "$$json" ]; then
             echo "  Creating: $$json"

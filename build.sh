@@ -25,12 +25,12 @@ echo "==> Webpack build completed successfully!"
 
 # Set up theme for Hugo
 echo "==> Setting up theme..."
-mkdir -p /site/exampleSite/themes
-ln -sf /site /site/exampleSite/themes/hugo-theme-hello-friend
+mkdir -p /site/usersite/themes
+ln -sf /site /site/usersite/themes/hugo-theme-hello-friend
 
 # Build Hugo site
 echo "==> Building Hugo site..."
-cd /site/exampleSite
+cd /site/usersite
 
 case "$HUGO_ACTION" in
     build)
