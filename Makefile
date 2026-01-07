@@ -1,4 +1,4 @@
-.PHONY: build serve clean test test-build playwright-install test-e2e
+.PHONY: build serve clean clean-cache clean-all test test-build test-cache playwright-install test-e2e exif-json
 
 # Build the Hugo site using Docker
 build:
@@ -23,6 +23,10 @@ test-build: build
 serve:
 	docker-compose up hugo-serve
 
+# Generate EXIF JSON sidecar files for all images
+exif-json:
+	docker-compose run --rm exif-json
+
 # Install Playwright browsers
 playwright-install:
 	npx playwright install --with-deps
@@ -34,10 +38,25 @@ test-e2e:
 # Run all tests (build validation + E2E tests)
 test: test-build playwright-install test-e2e
 
-# Clean build artifacts and Docker images
+# Test cache functionality
+test-cache:
+	@echo "Testing cache validation..."
+	npx playwright test tests/cache-validation.spec.js
+
+# Clean build artifacts only (KEEPS cache)
 clean:
-	rm -rf exampleSite/public exampleSite/resources
+	rm -rf exampleSite/public
 	docker-compose down --rmi local --remove-orphans 2>/dev/null || true
+
+# Clean cache only (force reprocessing all images)
+clean-cache:
+	@echo "Removing Hugo resources cache..."
+	rm -rf exampleSite/resources
+	@echo "✓ Cache cleared. Next build will regenerate all images."
+
+# Deep clean (removes everything)
+clean-all: clean clean-cache
+	@echo "✓ Complete cleanup finished"
 
 # Build Docker image
 docker-build:
@@ -48,11 +67,15 @@ help:
 	@echo "Available targets:"
 	@echo "  build              - Build the Hugo site (runs webpack + hugo build)"
 	@echo "  serve              - Serve the site at http://localhost:1313"
+	@echo "  exif-json          - Generate EXIF JSON sidecar files for all images"
 	@echo "  test               - Run all tests (build validation + E2E tests)"
 	@echo "  test-build         - Fast build validation (checks HTML files exist)"
+	@echo "  test-cache         - Test cache validation"
 	@echo "  test-e2e           - Run Playwright E2E tests"
 	@echo "  playwright-install - Install Playwright browsers"
-	@echo "  clean              - Remove build artifacts and Docker images"
+	@echo "  clean              - Remove build artifacts (keeps cache)"
+	@echo "  clean-cache        - Remove image processing cache"
+	@echo "  clean-all          - Remove build artifacts AND cache"
 	@echo "  docker-build       - Build the Docker image"
 	@echo "  help               - Show this help message"
 

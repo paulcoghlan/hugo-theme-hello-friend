@@ -3,6 +3,12 @@ languageCode = "en-us"
 theme = "hugo-theme-hello-friend"
 paginate = 5
 
+# Configure Hugo's image processing cache
+[caches]
+  [caches.images]
+    dir = ":resourceDir/_gen"
+    maxAge = -1  # Keep indefinitely (-1 = never expire)
+
 [params]
   # dir name of your blog content (default is `content/posts`)
   contentTypeName = "post"

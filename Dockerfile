@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim-tiny \
     git \
     ca-certificates \
-    gnupg
+    gnupg \
+    libimage-exiftool-perl
 
 # Install Hugo (detect architecture)
 RUN ARCH=$(dpkg --print-architecture) && \

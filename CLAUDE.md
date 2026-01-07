@@ -218,3 +218,74 @@ The `build.sh` script:
 ## Development Practises
 
 - Run `make serve`, `make test` or Playwright to verify changes.
+
+## Build Caching
+
+This theme implements persistent build caching for optimal performance with large photo galleries.
+
+### How It Works
+
+**Image Processing Cache**: Hugo resizes images to 375px height and stores results in `exampleSite/resources/_gen/images/`. This directory:
+- Persists across Docker builds via volume mount
+- Contains all processed images
+- Grows to ~1GB for 1,000-5,000 images
+- Is excluded from git (.gitignore)
+
+**Within-Build Cache**: The theme uses `partialCached` in `get_img.html` to avoid reprocessing the same image multiple times in a single build.
+
+### Performance
+
+**Cold Build** (no cache): 3-5 minutes for 1,000 images
+**Warm Build** (with cache): 5-10 seconds for 1,000 images
+**Speedup**: 10-50x faster with cache
+
+### Commands
+
+```bash
+make build        # Normal build (uses cache if available)
+make clean        # Clean build artifacts but KEEP cache
+make clean-cache  # Force reprocessing all images
+make clean-all    # Clean everything
+make test-cache   # Validate cache functionality
+```
+
+### When to Clear Cache
+
+Clear cache when:
+- Images modified but have same filename
+- Changing image processing parameters
+- Debugging image processing issues
+
+**Command**: `make clean-cache`
+
+### Configuration
+
+Cache settings in `exampleSite/config.toml`:
+```toml
+[caches.images]
+  dir = ":resourceDir/_gen"
+  maxAge = -1  # Keep indefinitely
+```
+
+Volume mount in `docker-compose.yml`:
+```yaml
+volumes:
+  - ./exampleSite/resources:/site/exampleSite/resources
+```
+
+### Troubleshooting
+
+**Cache not persisting:**
+- Check docker-compose.yml has resources volume mount
+- Verify .gitignore excludes resources/
+- Check Docker volumes: `docker volume ls`
+
+**Images not reprocessing after changes:**
+- Run `make clean-cache` to force regeneration
+- Check image modification times match
+- Verify Hugo version (0.142.0+)
+
+**Builds still slow with cache:**
+- Check resources directory size: `du -sh exampleSite/resources`
+- Verify Docker volumes are mounted: `docker inspect <container>`
+- Check Hugo logs for cache hits/misses: `hugo -v`

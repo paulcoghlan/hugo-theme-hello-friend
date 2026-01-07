@@ -6,6 +6,7 @@ services:
         HUGO_ACTION: build
     volumes:
       - ./exampleSite/public:/site/exampleSite/public
+      - ./exampleSite/resources:/site/exampleSite/resources
     environment:
       - HUGO_ACTION=build
 
@@ -18,5 +19,24 @@ services:
       - "1313:1313"
     volumes:
       - ./exampleSite/content:/site/exampleSite/content
+      - ./exampleSite/resources:/site/exampleSite/resources
     environment:
       - HUGO_ACTION=serve
+
+  exif-json:
+    build:
+      context: .
+    volumes:
+      - ./exampleSite/content:/site/exampleSite/content
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        echo "Generating EXIF JSON sidecar files..."
+        find /site/exampleSite/content -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) | while read img; do
+          json="$${img%.*}.json"
+          if [ ! -f "$$json" ]; then
+            echo "  Creating: $$json"
+            exiftool -j -LensSpec -FocalLength -FNumber -ExposureTime -ISO "$$img" > "$$json"
+          fi
+        done
+        echo "Done!"

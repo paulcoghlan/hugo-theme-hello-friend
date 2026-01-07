@@ -4,3 +4,5 @@ public
 .DS_Store
 .hugo_build.lock
 test-results/.last-run.json
+resources/
+exampleSite/content/**/*.json
