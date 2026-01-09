@@ -43,9 +43,7 @@ COPY build.sh ./
 
 RUN chmod +x build.sh
 
-# Define build argument with a default value
-ARG HUGO_ACTION=build
-# Convert ARG to ENV so it's available at runtime
-ENV HUGO_ACTION=${HUGO_ACTION}
+# Default action is build
+ENV HUGO_ACTION=build
 
 CMD ["./build.sh"]

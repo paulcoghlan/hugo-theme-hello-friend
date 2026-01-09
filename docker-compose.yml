@@ -2,8 +2,6 @@ services:
   hugo-build:
     build:
       context: .
-      args:
-        HUGO_ACTION: build
     volumes:
       - ${CONTENT_DIR:-./exampleSite}/public:/site/usersite/public
       - ${CONTENT_DIR:-./exampleSite}/resources:/site/usersite/resources
@@ -15,8 +13,6 @@ services:
   hugo-serve:
     build:
       context: .
-      args:
-        HUGO_ACTION: serve
     ports:
       - "1313:1313"
     volumes:

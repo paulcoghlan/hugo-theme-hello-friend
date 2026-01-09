@@ -37,7 +37,7 @@ case "$HUGO_ACTION" in
         hugo build
         ;;
     serve)
-        hugo server --bind 0.0.0.0 --baseURL http://localhost:1313
+        hugo server --bind 0.0.0.0 --baseURL http://127.0.0.1:1313
         ;;
     *)
         echo "ERROR: Unknown HUGO_ACTION: $HUGO_ACTION"
