@@ -47,20 +47,22 @@ jobs:
 
       - name: Build site with Hugo
         run: |
-          mkdir -p themes
-          ln -s .. themes/hugo-theme-hello-friend
-          hugo --logLevel info
-        working-directory: exampleSite
+          # Move exampleSite to a temp dir to avoid recursive theme loop when symlinking
+          mv exampleSite ../site_source
+          mkdir -p ../site_source/themes
+          # Link the current directory (the theme) into the temp site's themes
+          ln -s $GITHUB_WORKSPACE ../site_source/themes/hugo-theme-hello-friend
+          # Run Hugo from the temp site directory
+          hugo -s ../site_source --logLevel info
 
       - name: Verify build output
         run: |
-          if [ ! -d "public" ]; then
+          if [ ! -d "../site_source/public" ]; then
             echo "Hugo build did not create public directory!"
             exit 1
           fi
-          if [ ! -f "public/index.html" ]; then
+          if [ ! -f "../site_source/public/index.html" ]; then
             echo "Hugo did not generate index.html!"
             exit 1
           fi
           echo "Hugo build successful - public directory created with content!"
-        working-directory: exampleSite
