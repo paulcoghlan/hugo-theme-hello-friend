@@ -22,6 +22,22 @@ services:
     environment:
       - HUGO_ACTION=serve
 
+  hugo-deploy:
+    build:
+      context: .
+    volumes:
+      - ${CONTENT_DIR:-./exampleSite}/content:/site/usersite/content
+      - ${CONTENT_DIR:-./exampleSite}/resources:/site/usersite/resources
+      - ${CONTENT_DIR:-./exampleSite}/config.toml:/site/usersite/config.toml
+    environment:
+      - HUGO_ACTION=deploy
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION
+      - GOOGLE_APPLICATION_CREDENTIALS
+      - AZURE_STORAGE_ACCOUNT
+      - AZURE_STORAGE_KEY
+
   exif-json:
     build:
       context: .

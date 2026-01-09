@@ -39,15 +39,19 @@ case "$HUGO_ACTION" in
     serve)
         hugo server --bind 0.0.0.0 --baseURL http://127.0.0.1:1313
         ;;
+    deploy)
+        hugo build
+        hugo deploy
+        ;;
     *)
         echo "ERROR: Unknown HUGO_ACTION: $HUGO_ACTION"
-        echo "Valid options: build, serve"
+        echo "Valid options: build, serve, deploy"
         exit 1
         ;;
 esac
 
 # Verify build output
-if [ "$HUGO_ACTION" = "build" ]; then
+if [ "$HUGO_ACTION" = "build" ] || [ "$HUGO_ACTION" = "deploy" ]; then
     if [ ! -d "public" ]; then
         echo "ERROR: Hugo build did not create public directory!"
         exit 1
