@@ -12,7 +12,7 @@ on:
       - master
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,14 +39,6 @@ jobs:
           fi
           echo "Build completed successfully!"
 
-  hugo-test:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -54,7 +46,10 @@ jobs:
           extended: true
 
       - name: Build site with Hugo
-        run: hugo -v
+        run: |
+          mkdir -p themes
+          ln -s .. themes/hugo-theme-hello-friend
+          hugo --logLevel info
         working-directory: exampleSite
 
       - name: Verify build output
