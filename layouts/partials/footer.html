@@ -25,13 +25,13 @@
 <script src="{{ "assets/main.js" | absURL }}"></script>
 <script src="{{ "assets/prism.js" | absURL }}"></script>
 
-<script src="{{ "assets/jquery-3.6.1.min.js" | absURL }}"></script>
-<script src="{{ "assets/lightgallery.min.js" | absURL }}"></script>
-<script src="{{ "assets/jquery.justifiedGallery.js" | absURL }}"></script>
+<script src="{{ "vendor/jquery-3.6.1.min.js" | absURL }}"></script>
+<script src="{{ "vendor/lightgallery.min.js" | absURL }}"></script>
+<script src="{{ "vendor/jquery.justifiedGallery.js" | absURL }}"></script>
 
 {{- if and (eq .Type "gallery") (eq .Kind "page") -}}
-  <script src="{{ "assets/lg-autoplay.min.js" | absURL }}"></script>
-  <script src="{{ "assets/lg-thumbnail.min.js" | absURL }}"></script>
+  <script src="{{ "vendor/lg-autoplay.min.js" | absURL }}"></script>
+  <script src="{{ "vendor/lg-thumbnail.min.js" | absURL }}"></script>
 
   {{ if eq hugo.Environment "development" }}
     <!-- Allow drag and drop of images in dev mode -->

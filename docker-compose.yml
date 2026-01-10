@@ -18,6 +18,7 @@ services:
     volumes:
       - ${CONTENT_DIR:-./exampleSite}/content:/site/usersite/content
       - ${CONTENT_DIR:-./exampleSite}/resources:/site/usersite/resources
+      - ${CONTENT_DIR:-./exampleSite}/static:/site/usersite/static
       - ${CONTENT_DIR:-./exampleSite}/config.toml:/site/usersite/config.toml
     environment:
       - HUGO_ACTION=serve
