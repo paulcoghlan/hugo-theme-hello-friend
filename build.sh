@@ -11,10 +11,10 @@ cp -r /theme-src/* /site/ 2>/dev/null || true
 # Build webpack assets
 echo "==> Installing Node dependencies..."
 cd /site
-yarn install --frozen-lockfile
+npm ci --legacy-peer-deps
 
 echo "==> Building webpack assets..."
-yarn build
+npm run build
 
 # Check if build artifacts exist
 if [ ! -d "static/assets" ]; then
