@@ -7,7 +7,7 @@ export CONTENT_DIR
 # GCS bucket for deployment (override with: make deploy GCS_BUCKET=gs://your-bucket)
 GCS_BUCKET ?= gs://your-bucket-name
 
-# Build the Hugo site using Docker
+# Build the published site (webpack assets + Hugo) into public/ directory
 build:
 	docker-compose up hugo-build
 
@@ -30,10 +30,14 @@ test-build: build
 preview:
 	docker-compose up hugo-serve
 
-# Deploy to GCS bucket using rclone
+# Deploy to GCS bucket using rclone (optimized for large image collections)
 deploy: build
 	@echo "Deploying $(CONTENT_DIR)/public to $(GCS_BUCKET)..."
-	rclone sync $(CONTENT_DIR)/public $(GCS_BUCKET) --progress
+	rclone sync $(CONTENT_DIR)/public $(GCS_BUCKET) \
+		--transfers 16 \
+		--checkers 8 \
+		--fast-list \
+		--progress
 	@echo "✓ Deployment complete"
 
 # Generate EXIF JSON sidecar files for all images
@@ -78,7 +82,7 @@ docker-build:
 # Help
 help:
 	@echo "Available targets:"
-	@echo "  build              - Build the Hugo site (runs webpack + hugo build)"
+	@echo "  build              - Build the published site into public/ (webpack + Hugo)"
 	@echo "  preview            - Preview the site at http://localhost:1313"
 	@echo "  deploy             - Deploy to GCS bucket (set GCS_BUCKET=gs://your-bucket)"
 	@echo "  exif-json          - Generate EXIF JSON sidecar files for all images"

@@ -18,7 +18,7 @@ The project uses a Docker-based build system with webpack for asset compilation.
 # Clean all build artifacts and Docker images
 make clean
 
-# Build the site (webpack + Hugo build)
+# Build the published site into public/ (webpack + Hugo)
 make build
 
 # Serve the site at http://localhost:1313
