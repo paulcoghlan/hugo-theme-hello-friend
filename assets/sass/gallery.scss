@@ -32,10 +32,8 @@
             .jg-caption {
                 font-size: 1rem;
                 font-weight: 700;
-                line-height: 1.2rem;
+                line-height: 1.3;
                 text-shadow: 0 0 3px #000;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
                 left: 0;
                 bottom: 0;
@@ -43,9 +41,15 @@
                 right: auto;
                 position: absolute;
                 padding: 0 10px 8px;
-                // background-color: #292a2d;
-                display: block;
+
+                // Allow text wrapping with 2-line limit
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
                 overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
             }
         }
     }
