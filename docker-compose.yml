@@ -50,7 +50,9 @@ services:
         echo "Generating EXIF JSON sidecar files..."
         find /site/usersite/content -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) | while read img; do
           json="$${img%.*}.json"
-          if [ ! -f "$$json" ]; then
+          if [ -f "$$json" ]; then
+            echo "  Skipping (exists): $$json"
+          else
             echo "  Creating: $$json"
             exiftool -j -LensSpec -FocalLength -FNumber -ExposureTime -ISO "$$img" > "$$json"
           fi

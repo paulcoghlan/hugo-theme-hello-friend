@@ -98,7 +98,7 @@ help:
 	@echo "  help               - Show this help message"
 	@echo ""
 	@echo "Variables:"
-	@echo "  CONTENT_DIR        - Site directory (default: ./exampleSite)"
+	@echo "  CONTENT_DIR        - Site directory (e.g. /Volumes/Data/mysite, default: ./exampleSite)"
 	@echo "  GCS_BUCKET         - GCS bucket for deploy (default: gs://your-bucket-name)"
 	@echo ""
 	@echo "Examples:"
