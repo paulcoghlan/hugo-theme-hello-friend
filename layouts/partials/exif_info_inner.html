@@ -2,7 +2,12 @@
 {{- $jsonPath := printf "%s.json" (strings.TrimSuffix ".jpg" .Resource.Name) -}}
 {{- with .Page.Resources.GetMatch $jsonPath -}}
     {{- $jsonData := . | transform.Unmarshal -}}
-    {{- with index $jsonData 0 -}}
+    {{- /* Handle both array format [{...}] and direct object format {...} */ -}}
+    {{- $exifData := $jsonData -}}
+    {{- if reflect.IsSlice $jsonData -}}
+        {{- $exifData = index $jsonData 0 -}}
+    {{- end -}}
+    {{- with $exifData -}}
         {{- with .LensSpec -}}{{- $exif = $exif | append (printf "Lens: %s" .) -}}{{- end -}}
         {{- with .FocalLength -}}
             {{- if eq (printf "%T" .) "float64" -}}

@@ -23,8 +23,9 @@ test-build: build
 	@test -f $(CONTENT_DIR)/public/gallery/nature/index.html || (echo "ERROR: gallery/nature missing" && exit 1)
 	@test -f $(CONTENT_DIR)/public/gallery/nature/landscapes/index.html || (echo "ERROR: gallery/nature/landscapes missing (1-level nested)" && exit 1)
 	@test -f $(CONTENT_DIR)/public/gallery/nature/landscapes/mountains/index.html || (echo "ERROR: gallery/nature/landscapes/mountains missing (2-level nested)" && exit 1)
+	@test -f $(CONTENT_DIR)/public/gallery/test-json-format/index.html || (echo "ERROR: gallery/test-json-format missing (JSON format test)" && exit 1)
 	@test -f $(CONTENT_DIR)/public/archive/index.html || (echo "ERROR: archive page missing" && exit 1)
-	@echo "✓ All critical HTML files generated successfully (including nested galleries)"
+	@echo "✓ All critical HTML files generated successfully (including nested galleries and JSON format test)"
 
 # Preview the site locally
 preview:
