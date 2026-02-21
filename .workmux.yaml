@@ -1,0 +1,14 @@
+# Worktree naming: use full branch name with slashes as dashes
+worktree_naming: full
+
+# Symlink node_modules to save disk space across worktrees
+files:
+  symlink:
+    - node_modules
+
+# Pane layout: dev server on top, agent below
+panes:
+  - command: make preview
+    focus: true
+  - command: <agent>
+    split: horizontal
