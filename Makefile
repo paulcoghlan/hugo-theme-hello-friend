@@ -4,8 +4,9 @@
 CONTENT_DIR ?= ./exampleSite
 export CONTENT_DIR
 
-# GCS bucket for deployment (override with: make deploy GCS_BUCKET=gs://your-bucket)
-GCS_BUCKET ?= gs://your-bucket-name
+# GCS bucket for deployment (override with: make deploy GCS_BUCKET=gcs:your-bucket)
+# Requires an rclone remote named "gcs" configured for Google Cloud Storage
+GCS_BUCKET ?= gcs:your-bucket-name
 
 # Build the published site (webpack assets + Hugo) into public/ directory
 build:
@@ -32,9 +33,10 @@ preview:
 	docker-compose up hugo-serve
 
 # Deploy to GCS bucket using rclone (optimized for large image collections)
-deploy: build
+deploy: 
 	@echo "Deploying $(CONTENT_DIR)/public to $(GCS_BUCKET)..."
 	rclone sync $(CONTENT_DIR)/public $(GCS_BUCKET) \
+		--checksum \
 		--transfers 16 \
 		--checkers 8 \
 		--fast-list \
@@ -85,7 +87,7 @@ help:
 	@echo "Available targets:"
 	@echo "  build              - Build the published site into public/ (webpack + Hugo)"
 	@echo "  preview            - Preview the site at http://localhost:1313"
-	@echo "  deploy             - Deploy to GCS bucket (set GCS_BUCKET=gs://your-bucket)"
+	@echo "  deploy             - Deploy to GCS bucket (set GCS_BUCKET=gcs:your-bucket)"
 	@echo "  exif-json          - Generate EXIF JSON sidecar files for all images"
 	@echo "  test               - Run all tests (build validation + E2E tests)"
 	@echo "  test-build         - Fast build validation (checks HTML files exist)"
@@ -100,9 +102,9 @@ help:
 	@echo ""
 	@echo "Variables:"
 	@echo "  CONTENT_DIR        - Site directory (e.g. /Volumes/Data/mysite, default: ./exampleSite)"
-	@echo "  GCS_BUCKET         - GCS bucket for deploy (default: gs://your-bucket-name)"
+	@echo "  GCS_BUCKET         - rclone remote:bucket for deploy (default: gcs:your-bucket-name)"
 	@echo ""
 	@echo "Examples:"
 	@echo "  make preview CONTENT_DIR=/path/to/mysite"
-	@echo "  make deploy CONTENT_DIR=/path/to/mysite GCS_BUCKET=gs://my-bucket"
+	@echo "  make deploy CONTENT_DIR=/path/to/mysite GCS_BUCKET=gcs:my-bucket"
 
