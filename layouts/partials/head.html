@@ -20,9 +20,6 @@
 <!-- Custom CSS to override theme properties (/static/style.css) -->
 <link rel="stylesheet" href="{{ "style.css" | absURL }}" />
 
-{{ $sass := resources.Get "sass/gallery.scss" }}
-{{ $style := $sass | css.Sass }}
-<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
 
 
 <!-- Icons -->
@@ -55,6 +52,10 @@
 <!-- Gallery -->
 <link rel="stylesheet" href="{{ "vendor/justifiedGallery.min.css" | absURL }}" />
 <link rel="stylesheet" href="{{ "vendor/lightgallery-bundle.min.css" | absURL }}" />
+
+{{ $sass := resources.Get "sass/gallery.scss" }}
+{{ $style := $sass | css.Sass }}
+<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
 
 <script>
   var galleryProps =  {

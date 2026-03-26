@@ -14,8 +14,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  /* Improve readability */
-  padding: 8px 10px !important;
+  /* Improve readability - no vertical padding to prevent 3rd line peeking through line-clamp */
+  padding: 0 10px !important;
   font-size: 14px !important;
   line-height: 1.4;
 }

@@ -1,7 +1,10 @@
 ## TODO
 
-- Fix deprecations
-- Fix security warnings
+Move Hugo publish tools to own repo so theme is pure. 
+add tests to check publish cache
+Add web management ui to allow: 
+Publish, check publish state, edit gallery lists
+Move Hugo site publish to Homelab 
 
 - Separate build dirs for preview and deploy
 - Check caching builds works - make build is very slow

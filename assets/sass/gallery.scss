@@ -29,22 +29,23 @@
             // @media(max-width:683px) {
             //    width: 100%;
             //}
-            .jg-caption {
+            .jg-caption, .jg-caption.jg-caption-visible {
                 font-size: 1rem;
                 font-weight: 700;
                 line-height: 1.3;
                 text-shadow: 0 0 3px #000;
                 font-family: Inter,-apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Helvetica,Arial,sans-serif;
                 left: 0;
-                bottom: 0;
+                bottom: 8px;
                 top: auto;
-                right: auto;
+                right: 0;
                 position: absolute;
-                padding: 0 10px 8px;
+                padding: 0 10px !important;
 
                 // Allow text wrapping with 2-line limit
+                // No vertical padding - it creates space where a 3rd line peeks through line-clamp
                 white-space: normal;
-                display: -webkit-box;
+                display: -webkit-box !important;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
