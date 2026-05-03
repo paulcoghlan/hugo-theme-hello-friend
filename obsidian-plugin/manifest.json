@@ -1,0 +1,11 @@
+{
+  "id": "obsidian-supabase-sync",
+  "name": "Supabase RAG Sync",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Bidirectional sync between your Obsidian vault and a Supabase RAG database (OB1).",
+  "author": "OB1 Project",
+  "authorUrl": "https://github.com/NateBJones-Projects/OB1",
+  "fundingUrl": "",
+  "isDesktopOnly": true
+}
